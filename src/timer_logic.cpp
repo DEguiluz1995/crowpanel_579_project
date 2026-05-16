@@ -3,8 +3,10 @@
 #include "timer_logic.h"
 #include "app_state.h"
 
-void formatTimer(char buffer[], unsigned long ms)
-{
+// ---------------------- TIMER FORMATTER ----------------------
+//
+// Converts elapsed milliseconds into MM:SS format.
+void formatTimer(char buffer[], unsigned long ms){
     unsigned long totalSeconds = ms / 1000;
     unsigned long minutes = totalSeconds / 60;
     unsigned long seconds = totalSeconds % 60;
@@ -12,8 +14,18 @@ void formatTimer(char buffer[], unsigned long ms)
     sprintf(buffer, "%02lu:%02lu", minutes, seconds);
 }
 
-void toggleTimer()
-{
+// ---------------------- START / PAUSE TIMER ----------------------
+// Controls stopwatch behavior.
+// If timer is running:
+// - Save elapsed duration
+// - Stop counting
+//
+// If timer is stopped:
+// - Resume timing using previously saved elapsed duration
+// - Continue counting instead of restarting
+//
+// This creates pause/resume functionality.
+void toggleTimer(){
     if (timerRunning)
     {
         timerElapsed = millis() - timerStartTime;
@@ -26,8 +38,9 @@ void toggleTimer()
     }
 }
 
-void resetTimer()
-{
+// ---------------------- RESET TIMER ----------------------
+// Completely clears timer state.
+void resetTimer(){
     timerRunning = false;
     timerElapsed = 0;
 }
